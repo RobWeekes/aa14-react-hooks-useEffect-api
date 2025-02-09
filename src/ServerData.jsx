@@ -9,9 +9,9 @@ const ServerData = () => {
     try {
       const data = await fetch(url);
       if(!data.ok) throw new Error(`Response status: ${response.status}`)
-      console.log('data:', data);
+      // console.log('data:', data);
       const response = await data.json();
-      console.log('response:', response);
+      // console.log('response:', response);
       const array = response.data.br.motds;
       console.log('array:', array);
       setServerData(array);
@@ -21,18 +21,23 @@ const ServerData = () => {
     }
   }
 
-useEffect(() => {
-  fetchFortnite();
-}, []);
+  useEffect(() => {
+    fetchFortnite();
+  }, []);
 
-if (!serverData) return <h1>No Data To Display</h1>;
+  if (!serverData) return <h1>No Data To Display</h1>;
 
-// return (
-
-
-// )
-
-
+  return (
+    <div>
+      {serverData.map(entry => (
+        <div className='serverContainer' key={entry.id}>
+          <h1 className='title'>{entry.title}</h1>
+          <h2 className='body'>{entry.body}</h2>
+          <img className='img' src={entry.image} alt={entry.title} />
+        </div>
+      ))}
+    </div>
+  )
 };
 
 
